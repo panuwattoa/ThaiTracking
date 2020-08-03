@@ -1,0 +1,6 @@
+{
+	"URL_LINE": {
+		"send": "https://notify-api.line.me/api/notify"
+    },
+    "MESSAGING_API_PREFIX" : "https://api.line.me/v2/bot"
+}
