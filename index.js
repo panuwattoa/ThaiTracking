@@ -1,6 +1,6 @@
 import express from 'express';
 import Notify from './api/line_notify.js';
-import lotto from './src/services/thai_lotto.js'
+import lottery from './src/services/thai_lotto.js'
 import bodyParser from 'body-parser';
 const json = express;
 const app = express();
@@ -12,6 +12,7 @@ const port = process.env.PORT || 3000
 
 startServer();
 const lineNotify = new Notify({tokenBot: "6NU04QoAWz8TykxkhP9gsljzY1zPBeBta6k41CHLGkZUjrzZ10BcwFq0NeuvyH7e1nHU7MPlYurP7101dQ8f3Lr+baSycSXx/sLA+IHrwH7USdvhD0/vV68ma1AbmXQYk/VF6udov+jRCxC9g8LnqQdB04t89/1O/w1cDnyilFU="})
+const lotto = new lottery();
 
 function startServer() {
     app.listen(port, "0.0.0.0", function () {
