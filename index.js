@@ -30,7 +30,7 @@ app.post('/api/thaipost', (req, res) => {
 
 // todo: support other date prize
 app.post('/api/line/lottery', (req, res) => {
-    console.log(req.body.events[0].message)
+    console.log(req.body)
 
     if (req.body.events[0].message.type !== 'text') {
         return
