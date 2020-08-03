@@ -51,9 +51,9 @@ app.post('/api/line/lottery', (req, res) => {
       }
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
-      let resp = await lotto.getPeriodsByYear({"year":currentYear,"type":"CHECKED"})
+      let resp = lotto.getPeriodsByYear({"year":currentYear,"type":"CHECKED"})
       if(resp){
-        let respPrize = await lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.response.result[0].date})
+        let respPrize =  lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.response.result[0].date})
         if(respPrize){
                 console.log("respPrize " + respPrize)
                 if(respPrize.response.result[0].statusType === 1) {
