@@ -16,10 +16,10 @@ class Notify{
                 messages: args.messages,
               }).then(res=>{
                 const body = res.body
-                resolve(JSON.parse(body))
+                resolve(body)
             })
             .catch(err=>{
-                reject(JSON.parse(err.error))
+                reject(err.error)
             });
         })
     }
@@ -32,10 +32,10 @@ class Notify{
                 replyToken: args.replyToken,
               }).then(res=>{
                 const body = res.body
-                resolve(JSON.parse(body))
+                resolve(body)
             })
             .catch(err=>{
-                reject(JSON.parse(err.error))
+                reject(err.error)
             });
         })
     }

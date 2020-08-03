@@ -33,12 +33,6 @@ app.post('/api/thaipost', (req, res) => {
 // todo: support other date prize
 app.post('/api/line/lottery', (req, res) => {
     console.log(req.body)
-
-    if (req.body.events[0].message.type !== 'text') {
-        return
-    }
-    let text = req.body.events[0].message.text
-
     const payload = {
         replyToken: req.body.events[0].replyToken,
         messages: [
@@ -49,12 +43,23 @@ app.post('/api/line/lottery', (req, res) => {
           },
         ],
       }
+    if (req.body.events[0].message.type !== 'text') {
+        lineNotify.replyMessage(payload)
+        return
+    }
+
+    if (!Number(text) || text.length !== 6) {
+        lineNotify.replyMessage(payload)
+        return
+    }
+    let text = req.body.events[0].message.text
+
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
       let resp = lotto.getPeriodsByYear({"year":currentYear,"type":"CHECKED"})
-      console.log("currentYear " + currentYear +  "resp " + resp.response)
+      console.log("currentYear " + currentYear +  "resp " + resp.response + " typeof " + typeof currentYear)
       if(resp && resp.response){
-        let respPrize =  lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.response.result[0].date})
+        let respPrize =  lotto.checkLotteryResult({"number":[{"lottery_num":currentYear.toString()}],"period_date":resp.response.result[0].date})
         if(respPrize && respPrize.response){
                 console.log("respPrize " + respPrize)
                 if(respPrize.response.result[0].statusType === 1) {
