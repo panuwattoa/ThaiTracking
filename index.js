@@ -1,7 +1,7 @@
 import express from 'express';
 import Notify from './api/line_notify.js';
 import lotto from './src/services/thai_lotto.js'
-const bodyParser = require('body-parser')
+import bodyParser from 'body-parser';
 const json = express;
 const app = express();
 app.use(json());
