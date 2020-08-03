@@ -1,8 +1,7 @@
 import express from 'express';
-import Notify from './api/line_notify.js';
+import Notify from 'line-notify-service';
 import lottery from './src/services/thai_lotto.js'
 import bodyParser from 'body-parser';
-import axios from 'axios'
 
 const json = express;
 const app = express();
