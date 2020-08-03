@@ -47,12 +47,12 @@ app.post('/api/line/lottery', (req, res) => {
         lineNotify.replyMessage(payload)
         return
     }
+    let text = req.body.events[0].message.text
 
     if (!Number(text) || text.length !== 6) {
         lineNotify.replyMessage(payload)
         return
     }
-    let text = req.body.events[0].message.text
 
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
