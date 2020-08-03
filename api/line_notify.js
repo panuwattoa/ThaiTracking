@@ -1,16 +1,17 @@
 import axios from 'axios'
 
 class Notify{
+    
     constructor({tokenNotify, tokenBot }) {
         this.http = axios.create();
         this.tokenNotify = tokenNotify
         this.tokenBot = tokenBot
     }
-    
+
     //https://developers.line.me/businessconnect/api-reference#sending_message
     Notify(args){
         return new Promise((resolve, reject)=>{
-            this.http.defaults.headers.common['Authorization'] = "Bearer " + tokenNotify;
+            this.http.defaults.headers.common['Authorization'] = "Bearer " + this.tokenNotify;
             this.http.post(config.URL_LINE['send'], {
                 messages: args.messages,
               }).then(res=>{
@@ -25,7 +26,7 @@ class Notify{
 
     replyMessage(args){
         return new Promise((resolve, reject)=>{
-            this.http.defaults.headers.common['Authorization'] = "Bearer " + tokenBot;
+            this.http.defaults.headers.common['Authorization'] = "Bearer " + this.tokenBot;
             this.http.post(`${config.MESSAGING_API_PREFIX}/message/reply`, {
                 messages: targs.messages,
                 replyToken: args.replyToken,
@@ -38,7 +39,6 @@ class Notify{
             });
         })
     }
-
 }
 
 export default Notify
