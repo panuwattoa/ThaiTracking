@@ -49,12 +49,14 @@ app.post('/api/line/lottery', async (req, res) => {
         ],
       }
     if (req.body.events[0].message.type !== 'text') {
+       payload.messages[0].text = "วิธีการตรวจสอบ lottery ให้พิมพ์หมายเลขที่ต้องการตรวจ เช่น 123456"
         lineNotify.replyMessage(payload)
         return
     }
     let text = req.body.events[0].message.text
 
     if (!Number(text) || text.length !== 6) {
+        payload.messages[0].text = "ต้องการหมายเลข 6 หลัก"
         lineNotify.replyMessage(payload)
         return
     }
