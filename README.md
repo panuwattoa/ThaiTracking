@@ -1,4 +1,9 @@
 # ThaiTracking
-Tracking service in Thailand ex. Thaipost, Kerry
+Tracking service in Thailand ex. Thaipost, Kerry, lottery
 
-Line notify
+Line bot
+
+TODO: Thaipost
+TODO: Kerry
+DONE: Lottery
+
