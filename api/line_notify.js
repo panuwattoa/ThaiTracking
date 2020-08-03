@@ -1,5 +1,5 @@
 import axios from 'axios'
-import config from './config.json'
+import config from './config.js'
 class Notify{
     
     constructor({tokenNotify, tokenBot }) {
@@ -12,7 +12,7 @@ class Notify{
     Notify(args){
         return new Promise((resolve, reject)=>{
             this.http.defaults.headers.common['Authorization'] = "Bearer " + this.tokenNotify;
-            this.http.post(config.URL_LINE['send'], {
+            this.http.post(config.URL_LINE.SEND, {
                 messages: args.messages,
               }).then(res=>{
                 const body = res.body
@@ -27,7 +27,7 @@ class Notify{
     replyMessage(args){
         return new Promise((resolve, reject)=>{
             this.http.defaults.headers.common['Authorization'] = "Bearer " + this.tokenBot;
-            this.http.post(`${config.MESSAGING_API_PREFIX}/message/reply`, {
+            this.http.post(`${config.URL_LINE.MESSAGING_API_PREFIX}/message/reply`, {
                 messages: targs.messages,
                 replyToken: args.replyToken,
               }).then(res=>{
