@@ -59,8 +59,6 @@ app.post('/api/line/lottery', async (req, res) => {
         lineNotify.replyMessage(payload)
         return
     }
-    payload.messages[0].text = "กำลังตรวจสอบ ..."
-    lineNotify.replyMessage(payload)
 
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
@@ -71,7 +69,7 @@ app.post('/api/line/lottery', async (req, res) => {
         if(respPrize && respPrize.data.response){
                 console.log("respPrize.data " + respPrize.data)
                 if(respPrize.data.response.result[0].statusType === 1) {
-                    payload.messages[0].text = "ยินดีด้วย ถูกรางวัล " + respPrize.data.response.result[0].status_data[0].reward + " ประจำวันที่ " + resp.data.response.result[0].date + " หมายเลข" + respPrize.data.response.result[0].number
+                    payload.messages[0].text = "ยินดีด้วย ถูกรางวัล " + respPrize.data.response.result[0].status_data[0].reward + " ประจำวันที่ " + resp.data.response.result[0].date + " หมายเลข " + respPrize.data.response.result[0].number
                 }else{
                     payload.messages[0].text = "ไม่ถูกรางวัลประจำวันที่ " + resp.data.response.result[0].date
                 }
