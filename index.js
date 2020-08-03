@@ -2,6 +2,8 @@ import express from 'express';
 import Notify from './api/line_notify.js';
 import lottery from './src/services/thai_lotto.js'
 import bodyParser from 'body-parser';
+import axios from 'axios'
+
 const json = express;
 const app = express();
 app.use(json());
@@ -26,12 +28,16 @@ app.get('/', (req, res) => {
 });
 
 // todo:
-app.post('/api/thaipost', (req, res) => {
-    res.send('<h1>Hello </h1>');
+app.post('/api/thaipost', async (req, res) => {
+    // const todaysDate = new Date()
+    // const currentYear = todaysDate.getFullYear()
+    // let resp = await axios.post(`https://www.glo.or.th/api/lottery/getPeriodsByYear`, {"year":"2020","type":"CHECKED"})
+    // //let resp = lotto.getPeriodsByYear({"year":"2020","type":"CHECKED"})
+    // res.send(resp.data);
 });
 
 // todo: support other date prize
-app.post('/api/line/lottery', (req, res) => {
+app.post('/api/line/lottery', async (req, res) => {
     console.log(req.body)
     const payload = {
         replyToken: req.body.events[0].replyToken,
@@ -56,16 +62,16 @@ app.post('/api/line/lottery', (req, res) => {
 
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
-      let resp = lotto.getPeriodsByYear({"year":currentYear.toString(),"type":"CHECKED"})
-      console.log("currentYear " + currentYear +  "resp " + resp.response + " typeof " + typeof currentYear)
-      if(resp && resp.response){
-        let respPrize =  lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.response.result[0].date})
-        if(respPrize && respPrize.response){
-                console.log("respPrize " + respPrize)
-                if(respPrize.response.result[0].statusType === 1) {
-                    payload.messages[0].text = "ยินดีด้วย ถูกรางวัล " + respPrize.response.result[0].status_data[0].reward + " ประจำวันที่ " + resp.response.result[0].date + " หมายเลข" + respPrize.response.result[0].number
+      let resp = await lotto.getPeriodsByYear({"year":currentYear.toString(),"type":"CHECKED"})
+      console.log("currentYear " + currentYear +  "resp " + resp.data.response + " typeof " + typeof currentYear)
+      if(resp && resp.data.response){
+        let respPrize = await lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.data.response.result[0].date})
+        if(respPrize && respPrize.data.response){
+                console.log("respPrize.data " + respPrize.data)
+                if(respPrize.data.response.result[0].statusType === 1) {
+                    payload.messages[0].text = "ยินดีด้วย ถูกรางวัล " + respPrize.data.response.result[0].status_data[0].reward + " ประจำวันที่ " + resp.data.response.result[0].date + " หมายเลข" + respPrize.data.response.result[0].number
                 }else{
-                    payload.messages[0].text = "ไม่ถูกรางวัลประจำวันที่ " + resp.response.result[0].date
+                    payload.messages[0].text = "ไม่ถูกรางวัลประจำวันที่ " + resp.data.response.result[0].date
                 }
             }else{
                 lineNotify.replyMessage(payload)
