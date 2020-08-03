@@ -1,6 +1,7 @@
 import express from 'express';
 import Notify from './api/line_notify.js';
 import lotto from './src/services/thai_lotto.js'
+const bodyParser = require('body-parser')
 const json = express;
 const app = express();
 app.use(json());
@@ -30,7 +31,7 @@ app.post('/api/thaipost', (req, res) => {
 
 // todo: support other date prize
 app.post('/api/line/lottery', (req, res) => {
-    console.log(req.body.events[0].message)
+    console.log(req.body)
 
     if (req.body.events[0].message.type !== 'text') {
         return
