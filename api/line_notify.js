@@ -28,7 +28,7 @@ class Notify{
         return new Promise((resolve, reject)=>{
             this.http.defaults.headers.common['Authorization'] = "Bearer " + this.tokenBot;
             this.http.post(`${config.URL_LINE.MESSAGING_API_PREFIX}/message/reply`, {
-                messages: targs.messages,
+                messages: args.messages,
                 replyToken: args.replyToken,
               }).then(res=>{
                 const body = res.body
