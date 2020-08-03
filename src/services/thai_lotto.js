@@ -1,20 +1,12 @@
 import axios from 'axios'
 
 class ThaiLotto {
-    checkLotteryResult(payload, callback){
-        axios
-        .post(`https://www.glo.or.th/api/checking/getcheckLotteryResult`, payload).then(resp => {
-            callback(null,resp)
-        })
-        .catch(err => console.log(err.data))
+    async checkLotteryResult(payload){
+         return axios.post(`https://www.glo.or.th/api/checking/getcheckLotteryResult`, payload)
     }
 
-    getPeriodsByYear(payload, callback){
-        axios
-        .post(`https://www.glo.or.th/api/lottery/getPeriodsByYear`, payload).then(resp => {
-            callback(null,resp)
-        })
-        .catch(err => callback(err,null))
+    async getPeriodsByYear(payload){
+        return axios.post(`https://www.glo.or.th/api/lottery/getPeriodsByYear`, payload)
     }
 }
 

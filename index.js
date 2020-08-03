@@ -51,23 +51,22 @@ app.post('/api/line/lottery', (req, res) => {
       }
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
-      lotto.getPeriodsByYear({"year":currentYear,"type":"CHECKED"}, (error, resp) => {
-          if(error){
-            lineNotify.replyMessage(payload)
-          }else{
-            lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.response.result[0].date},  (err, respPrize) => {
-                if(respPrize){
-                    console.log("respPrize " + respPrize)
-                    if(respPrize.response.result[0].statusType === 1) {
-                        payload.messages[0].text = "ยินดีด้วย ถูกรางวัล " + respPrize.response.result[0].status_data[0].reward + " ประจำวันที่ " + resp.response.result[0].date + " หมายเลข" + respPrize.response.result[0].number
-                    }else{
-                        payload.messages[0].text = "ไม่ถูกรางวัลประจำวันที่ " + resp.response.result[0].date
-                    }
+      let resp = await lotto.getPeriodsByYear({"year":currentYear,"type":"CHECKED"})
+      if(resp){
+        let respPrize = await lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.response.result[0].date})
+        if(respPrize){
+                console.log("respPrize " + respPrize)
+                if(respPrize.response.result[0].statusType === 1) {
+                    payload.messages[0].text = "ยินดีด้วย ถูกรางวัล " + respPrize.response.result[0].status_data[0].reward + " ประจำวันที่ " + resp.response.result[0].date + " หมายเลข" + respPrize.response.result[0].number
                 }else{
-                    lineNotify.replyMessage(payload)
+                    payload.messages[0].text = "ไม่ถูกรางวัลประจำวันที่ " + resp.response.result[0].date
                 }
-            })
-          }
-      })
+            }else{
+                lineNotify.replyMessage(payload)
+        }
+      }else{
+        lineNotify.replyMessage(payload)
+      }
+
     res.send('DONE');
 });
