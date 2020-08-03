@@ -73,9 +73,8 @@ app.post('/api/line/lottery', async (req, res) => {
                 }else{
                     payload.messages[0].text = "ไม่ถูกรางวัลประจำวันที่ " + resp.data.response.result[0].date
                 }
-            }else{
-                lineNotify.replyMessage(payload)
-        }
+            }
+        lineNotify.replyMessage(payload)
       }else{
         lineNotify.replyMessage(payload)
       }
