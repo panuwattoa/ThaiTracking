@@ -59,6 +59,8 @@ app.post('/api/line/lottery', async (req, res) => {
         lineNotify.replyMessage(payload)
         return
     }
+    payload.messages[0].text = "กำลังตรวจสอบ ..."
+    lineNotify.replyMessage(payload)
 
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
