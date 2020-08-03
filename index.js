@@ -4,6 +4,9 @@ import lotto from './src/services/thai_lotto.js'
 const json = express;
 const app = express();
 app.use(json());
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
 const port = process.env.PORT || 3000
 
 startServer();
