@@ -52,9 +52,10 @@ app.post('/api/line/lottery', (req, res) => {
       const todaysDate = new Date()
       const currentYear = todaysDate.getFullYear()
       let resp = lotto.getPeriodsByYear({"year":currentYear,"type":"CHECKED"})
-      if(resp){
+      console.log("currentYear " + currentYear +  "resp " + resp)
+      if(resp && resp.response){
         let respPrize =  lotto.checkLotteryResult({"number":[{"lottery_num":text}],"period_date":resp.response.result[0].date})
-        if(respPrize){
+        if(respPrize && respPrize.response){
                 console.log("respPrize " + respPrize)
                 if(respPrize.response.result[0].statusType === 1) {
                     payload.messages[0].text = "ยินดีด้วย ถูกรางวัล " + respPrize.response.result[0].status_data[0].reward + " ประจำวันที่ " + resp.response.result[0].date + " หมายเลข" + respPrize.response.result[0].number
